@@ -256,6 +256,7 @@ class AcpServer:
         except RequestError as error:
             return JSONResponse(error_response(error), status_code=400)
         if message is None:
+            # A batch root is a JSON-RPC message this HTTPS transport cannot replay per entry.
             return JSONResponse({"error": "Batch requests are not supported"}, status_code=501)
 
         if is_initialize_request(message):
